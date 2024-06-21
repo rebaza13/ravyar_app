@@ -1,32 +1,28 @@
 <template>
   <IonPage>
-    <IonContent class="ion-padding">
-      <div class="login-container">
-        <img src="/images/undraw_secure_login_pdn4.png" alt="Logo" class="app-logo">
-        <h1 class="text-3xl font-bold">Diet Coach Pro</h1>
+    <IonContent class="ion-padding" color="light">
+      <div class="login-container ion-text-center">
+        <img src="/images/undraw_secure_login_pdn4.png" alt="Logo" class="app-logo" />
+        <h1 class="ion-text-center ion-margin-vertical">Diet Coach Pro</h1>
 
-        <IonItem class="p-4">
-          <IonLabel position="stacked">Email</IonLabel>
-          <IonInput v-model="email" type="email" required></IonInput>
-        </IonItem>
+        <div class="input-wrapper">
+          <IonItem lines="none" class="ion-margin-bottom">
+            <IonLabel position="stacked">Email</IonLabel>
+            <IonInput v-model="email" type="email" required></IonInput>
+          </IonItem>
 
-        <IonItem class="p-4 flex gap-2">
-          <IonLabel position="stacked">Password</IonLabel>
-          <IonInput v-model="password" type="password" required></IonInput>
-        </IonItem>
-
-        <div class="login-actions">
-          <IonButton color="success" expand="block" @click="login">Login</IonButton>
-
-          <div class="links">
-            <span>Don't have an account? </span>
-            <router-link to="/register">Register</router-link>
-          </div>
-
-      
+          <IonItem lines="none" class="ion-margin-bottom">
+            <IonLabel position="stacked">Password</IonLabel>
+            <IonInput v-model="password" type="password" required></IonInput>
+          </IonItem>
         </div>
 
-     
+        <IonButton color="success" expand="block" class="ion-margin-top" @click="login">Login</IonButton>
+
+        <div class="ion-text-center ion-margin-top">
+          <span>Don't have an account? </span>
+          <router-link to="/register" class="router-link">Register</router-link>
+        </div>
       </div>
     </IonContent>
   </IonPage>
@@ -74,37 +70,65 @@ const login = async () => {
 // };
 </script>
 
-<style scoped>
-/* Option 1: Using CSS Padding (Recommended) */
-.ion-item {
-  padding: 1rem; /* Adjust padding values as needed */
-}
-
-/* Styling for login actions and reset form sections */
-.login-actions,
-.reset-form {
-  margin-top: 1rem;
-}
-
-/* Styling for the "Don't have an account?" and "Forgot password?" links */
-.links {
+<style>
+.login-container {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  margin-top: 0.5rem;
+  justify-content: center;
+  height: 100%;
+  padding: 16px;
 }
 
-.links span {
-  margin-right: 0.5rem;
-  font-size: 0.8rem; /* Adjust font size as needed */
-  color: #888; /* Adjust text color as needed */
+.app-logo {
+  max-width: 150px;
+  margin-bottom: 20px;
 }
 
-/* Styling for the reset password form */
-.reset-form {
-  display: none; /* Initially hide the reset form */
+h1 {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #1e40af; /* Primary color */
+  margin-bottom: 16px;
 }
 
-.reset-form p {
-  margin-bottom: 1rem;
+.input-wrapper {
+  width: 100%;
+  max-width: 400px;
+}
+
+ion-item {
+  --highlight-color-focused: #1e40af; /* Primary color */
+  --highlight-color-valid: #1e40af; /* Primary color */
+  --background: #f0f4f8; /* Light background color for inputs */
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 16px;
+}
+
+ion-input {
+  width: 100%;
+}
+
+ion-button {
+  --background: #10b981; /* Success color */
+  --border-radius: 8px;
+  --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+}
+
+ion-button:hover {
+  --background: #0f9b71;
+}
+
+.router-link {
+  color: #1e40af; /* Primary color */
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.router-link:hover {
+  text-decoration: underline;
 }
 </style>

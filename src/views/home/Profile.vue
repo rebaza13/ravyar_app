@@ -1,81 +1,79 @@
 <template>
-    <ion-page class="update-profile pb-24 pt-6">
-      <ion-content class="ion-padding">
-        <div v-if="mainStore.user.role =='user'" class="update-profile-container">
-          <h2 class="update-profile-title">Update Your Profile</h2>
-          <ion-button color="success"  @click="toggleEditMode" expand="block" class="mb-4  text-white hover:bg-green-700">
-            {{ editMode ? 'Cancel Edit' : 'Edit Profile' }}
+  <ion-page class="update-profile">
+    <ion-content class="ion-padding">
+      <!-- User Profile Update Section -->
+      <div v-if="mainStore.user.role === 'user'" class="update-profile-container">
+        <h2 class="update-profile-title">Update Your Profile</h2>
+        <ion-button color="success" @click="toggleEditMode" expand="block" class="mb-4">
+          {{ editMode ? 'Cancel Edit' : 'Edit Profile' }}
+        </ion-button>
+        <form @submit.prevent="submitForm">
+          <div class="form-group">
+            <ion-label position="floating">Name</ion-label>
+            <ion-input id="name" v-model="name" :disabled="!editMode"></ion-input>
+          </div>
+          <div class="form-group">
+            <ion-label position="floating">Age</ion-label>
+            <ion-input id="age" type="number" v-model="age" :disabled="!editMode"></ion-input>
+          </div>
+          <div class="form-group">
+            <ion-label position="floating">Gender</ion-label>
+            <ion-select id="gender" v-model="gender" :disabled="!editMode">
+              <ion-select-option value="male">Male</ion-select-option>
+              <ion-select-option value="female">Female</ion-select-option>
+            </ion-select>
+          </div>
+          <div class="form-group">
+            <ion-label position="floating">Weight (kg)</ion-label>
+            <ion-input id="weight" type="number" v-model="weight" :disabled="!editMode"></ion-input>
+          </div>
+          <div class="form-group">
+            <ion-label position="floating">Height (cm)</ion-label>
+            <ion-input id="height" type="number" v-model="height" :disabled="!editMode"></ion-input>
+          </div>
+          <div class="form-group">
+            <ion-label position="floating">Body Type</ion-label>
+            <ion-select id="bodyType" v-model="bodyType" :disabled="!editMode">
+              <ion-select-option value="slim">Slim</ion-select-option>
+              <ion-select-option value="average">Average</ion-select-option>
+              <ion-select-option value="athletic">Athletic</ion-select-option>
+              <ion-select-option value="curvy">Curvy</ion-select-option>
+            </ion-select>
+          </div>
+          <div class="form-group">
+            <ion-button @click="takePhoto" color="success" :disabled="!editMode">Take Photo</ion-button>
+            <ion-img v-if="photo" :src="photo"></ion-img>
+          </div>
+          <ion-button type="submit" color="success" expand="block" class="mb-4" :disabled="!editMode">
+            Submit
           </ion-button>
-          <form @submit.prevent="submitForm">
-            <div class="flex flex-col gap-5  " >
-              <ion-label position="floating" class="">Name</ion-label>
-              <ion-input id="name" v-model="name" :disabled="!editMode"></ion-input>
-            </div>
-            <div class="flex flex-col gap-5">
-              <ion-label position="floating">Age</ion-label>
-              <ion-input id="age" type="number" v-model="age" :disabled="!editMode"></ion-input>
-            </div>
-          
-            <div class="flex flex-col gap-5">
-              <ion-label position="floating">Gender</ion-label>
-              <ion-select id="gender" v-model="gender" :disabled="!editMode">
-                <ion-select-option value="male">Male</ion-select-option>
-                <ion-select-option value="female">Female</ion-select-option>
-              </ion-select>
-            </div>
-            <div class="flex flex-col gap-5">
-              <ion-label position="floating">Weight (kg)</ion-label>
-              <ion-input id="weight" type="number" v-model="weight" :disabled="!editMode"></ion-input>
-            </div>
-            <div class="flex flex-col gap-5">
-              <ion-label position="floating">Height (cm)</ion-label>
-              <ion-input id="height" type="number" v-model="height" :disabled="!editMode"></ion-input>
-            </div>
-            <div class="flex flex-col gap-5">
-              <ion-label position="floating">Body Type</ion-label>
-              <ion-select id="bodyType" v-model="bodyType" :disabled="!editMode">
-                <ion-select-option value="slim">Slim</ion-select-option>
-                <ion-select-option value="average">Average</ion-select-option>
-                <ion-select-option value="athletic">Athletic</ion-select-option>
-                <ion-select-option value="curvy">Curvy</ion-select-option>
-              </ion-select>
-            </div>
-            <ion-button @click="takePhoto" color="success" >Take Photo</ion-button>
-      <ion-img v-if="photo" :src="photo"></ion-img>
+        </form>
+      </div>
 
-    
-            <ion-button type="submit" color="success" expand="block" class=" text-white hover:bg-green-700" :disabled="!editMode">
-              Submit
-            </ion-button>
-           
-     
-          </form>
-        </div>
-
-        <div v-if="mainStore.user.role =='coach'" class="update-profile-container">
-          <h2 class="update-profile-title">Update Your Profile</h2>
-          <ion-button color="success"  @click="toggleEditMode" expand="block" class="mb-4  text-white hover:bg-green-700">
-            {{ editMode ? 'Cancel Edit' : 'Edit Profile' }}
+      <!-- Coach Profile Update Section -->
+      <div v-if="mainStore.user.role === 'coach'" class="update-profile-container">
+        <h2 class="update-profile-title">Update Your Profile</h2>
+        <ion-button color="success" @click="toggleEditMode" expand="block" class="mb-4">
+          {{ editMode ? 'Cancel Edit' : 'Edit Profile' }}
+        </ion-button>
+        <form @submit.prevent="submitForm2">
+          <div class="form-group">
+            <ion-label position="floating">Name</ion-label>
+            <ion-input id="name" v-model="name" :disabled="!editMode"></ion-input>
+          </div>
+          <div class="form-group">
+            <ion-label position="floating">Description</ion-label>
+            <ion-input id="description" v-model="description" :disabled="!editMode"></ion-input>
+          </div>
+          <ion-button type="submit" color="success" expand="block" class="mb-4" :disabled="!editMode">
+            Submit
           </ion-button>
-          <form @submit.prevent="submitForm2">
-            <div class="flex flex-col gap-5  " >
-              <ion-label position="floating" class="">Name</ion-label>
-              <ion-input id="name" v-model="name" :disabled="!editMode"></ion-input>
-            </div>
-            <div class="flex flex-col gap-5  " >
-              <ion-label position="floating" class="">Description</ion-label>
-              <ion-input id="name" v-model="description" :disabled="!editMode"></ion-input>
-            </div>
-          
-            <ion-button type="submit" color="success" expand="block" class=" text-white hover:bg-green-700" :disabled="!editMode">
-              Submit
-            </ion-button>
-     
-          </form>
-        </div>
-      </ion-content>
-    </ion-page>
-  </template>
+        </form>
+      </div>
+    </ion-content>
+  </ion-page>
+</template>
+
   
   <script setup>
   import { onMounted, ref } from 'vue';
@@ -200,24 +198,37 @@ const uploadPhoto = async () => {
   </script>
   
   <style scoped>
-  ion-img {
-  display: block;
-  margin: 20px 0;
-  width: 100%;
-  max-width: 300px;
-  height: auto;
-  border: 2px solid #ccc;
-  border-radius: 8px;
-}
+  .update-profile {
+    background-color: #ffffff; /* Example background color */
+    height: 100%;
+  }
+
   .update-profile-container {
-    max-width: 400px;
-    margin: 0 auto;
+    background-color: #ffffff; /* White background for the container */
+    padding: 20px;
+    margin-bottom: 20px;
+
   }
+
   .update-profile-title {
-    text-align: center;
-    margin-bottom: 16px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333333; /* Dark text color */
+    margin-bottom: 1rem;
   }
-  
-  </style>
+
+  .form-group {
+    margin-bottom: 1.5rem;
+  }
+
+  .ion-button {
+    --background: #4caf50; /* Custom success button color */
+    --border-radius: 8px; /* Custom button border radius */
+  }
+
+  .ion-button:hover {
+    --background: #388e3c; /* Custom hover background color */
+  }
+</style>
   
   

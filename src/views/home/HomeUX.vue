@@ -122,6 +122,32 @@
               </div>
             </button>
             <button
+    v-if="mainStore.user && mainStore.user.role === 'coach'"
+
+    class="relative w-36 h-36 bg-blue-600 rounded-lg overflow-hidden hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-opacity-50"
+  >
+   
+    <div class="absolute inset-0 flex items-center justify-center">
+      <div class="flex flex-col text-white items-center justify-center">
+        <div>suggest pre course Soon</div>
+        <svg
+        class="w-6 h-6 text-white opacity-50"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M6 18L18 6M6 6l12 12"
+        />
+      </svg>
+      </div>
+    </div>
+  </button>
+            <button
               v-if="mainStore.user && mainStore.user.role === 'coach'"
               @click="router.push({ name: 'deleter' })"
               class="relative w-36 h-36 bg-red-600 rounded-lg overflow-hidden  focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
