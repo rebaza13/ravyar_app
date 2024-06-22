@@ -1,6 +1,6 @@
 <template>
   <ion-page class="update-profile">
-    <ion-content class="ion-padding">
+    <ion-content class="ion-padding bg-slate-400">
       <div class="ion-text-center">
         <img src="/images/undraw_secure_login_pdn4.png" alt="Register" class="mx-auto w-1/4 mb-8 scale-90">
         <h2 class="ion-text-primary text-xl font-bold mb-4">Register a Coach</h2>
@@ -20,6 +20,10 @@
           <ion-item class="ion-margin-bottom">
             <ion-label position="floating">Password</ion-label>
             <ion-input id="password" type="password" v-model="password"></ion-input>
+          </ion-item>
+          <ion-item class="ion-margin-bottom">
+            <ion-label position="floating">Price</ion-label>
+            <ion-input id="t" type="text" v-model="price"></ion-input>
           </ion-item>
           <ion-button expand="block" type="submit" color="success">
             Register
@@ -44,11 +48,12 @@ const description = ref('');
 const password = ref('');
 const mainStore = useMainStore();
 const router = useRouter();
+const price = ref()
 
 const register = async () => {
   try {
     const userCredential = await registerUser(email.value, password.value);
-    await addUserToFirestore(userCredential.uid, { email: email.value,description:description.value, id: userCredential.uid, name: name.value, role: 'coach' });
+    await addUserToFirestore(userCredential.uid, { email: email.value,price:price.value,description:description.value, id: userCredential.uid, name: name.value, role: 'coach' });
     mainStore.user = userCredential;
     console.log('Registration successful');
     router.push({ name: 'user-management' });

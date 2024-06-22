@@ -1,6 +1,21 @@
 <template>
   <ion-page>
     <ion-content class="ion-padding bg-gray-50 z-20">
+      
+      <!-- popup -->
+      <div v-if="pressed" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+    <div class="relative p-8 bg-white rounded-lg shadow-lg w-80">
+      <h2 class="text-2xl font-semibold text-gray-800 mb-4">Choose Payment Method</h2>
+      <div class="flex justify-between">
+        <button @click="handlePay" class="bg-pink-500 text-white px-4 py-2 rounded-lg hover:bg-pink-600 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-opacity-50">
+          FastPay
+        </button>
+        <button @click="handlePay" class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50">
+          FIB
+        </button>
+      </div>
+    </div>
+  </div>
       <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
         <h2 class="text-3xl font-extrabold text-gray-900 mb-6">
           Select a Coach
@@ -15,7 +30,10 @@
             class="bg-white shadow-md rounded-lg overflow-hidden"
           >
             <div class="p-6">
-              <h3 class="text-xl font-bold text-gray-800">{{ coach.name }}</h3>
+       <div class="flex w-full justify-between items-center">
+        <h3 class="text-xl font-bold text-gray-800">{{ coach.name }}</h3>
+        <h3 class="text-xl font-bold text-gray-800">{{ coach.price?coach.price:'' }}$</h3>
+       </div>
 
               <p class="text-gray-600">{{ coach.description }}</p>
               <div class="flex justify-between items-end">
@@ -43,7 +61,7 @@
                 <div class="mt-4 flex justify-end">
                   <button
                     v-if="showResult(coach.id) === 'Select'"
-                    @click="selectCoach(coach.id)"
+                    @click="handleConfirm(coach.id)"
                     class="btn-select"
                   >
                     Select
@@ -79,6 +97,8 @@ import { db } from "@/firebase/firebase";
 const coaches = ref<any>([]); // Array to hold the list of coaches
 // const router = useRouter();
 const mainStore = useMainStore();
+const pressed = ref(false)
+const selectedI =ref()
 const requestList = ref<any>([]);
 // Fetch coaches from Firebase on component mount
 onMounted(async () => {
@@ -99,6 +119,14 @@ const showResult = (id: string) => {
   return isSent ? "Sent" : "Select";
 };
 // Function to select a coach
+const  handleConfirm = (coach:any)=>{
+pressed.value = !pressed.value
+selectedI.value = coach
+}
+const handlePay = async ()=>{
+  pressed.value = !pressed.value
+  await selectCoach(selectedI.value)
+}
 const selectCoach = async (coach: any) => {
   // Redirect to another page or perform action with selected coach
   const add = await addDoc(collection(db, "requests"), {
@@ -106,7 +134,6 @@ const selectCoach = async (coach: any) => {
     email: mainStore.user.email,
     coachId: coach,
   });
-  console.log(add, "d");
   requestList.value = [];
   const getRequest = await getCollection("requests");
   getRequest.forEach((object: any) => {
@@ -114,8 +141,7 @@ const selectCoach = async (coach: any) => {
   });
   const coachesData = await getCollection("users"); // Fetch coaches data from Firebase
   coaches.value = coachesData.filter((coach: any) => coach.role === "coach");
-  // Example: Redirect to coach profile page
-  // router.push({ name: 'coach-profile', params: { coachId: coach.id } });
+
 };
 
 const cancelCoach = async (coach: any) => {

@@ -1,6 +1,6 @@
 <template>
   <ion-page class="update-profile pt-6 pb-20">
-    <ion-content class="ion-padding">
+    <ion-content class="ion-padding bg-slate-400">
       <div class="update-profile-container">
         <h2 class="update-profile-title">your personal detail</h2>
         <form @submit.prevent="submitForm">
@@ -79,7 +79,7 @@ const submitForm = async () => {
         type: bodyType.value
       });
       alert('Profile updated successfully');
-      router.push({ name: 'home' });
+      router.push({ name: 'homeI' });
       console.log('Profile updated successfully');
     }
   } catch (error) {

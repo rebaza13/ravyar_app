@@ -101,7 +101,7 @@ import { firebaseApp } from '@/firebase/firebase';
   const name = ref(''); // Pre-fill with user data
   const age = ref('{{ user.age }}'); // Pre-fill with user data
   // const email = ref('{{ user.email }}'); // Pre-fill with user data (disabled)
-  const gender = ref('{{ user.gender }}'); // Pre-fill with user data
+  const gender = ref(''); // Pre-fill with user data
   const description = ref(''); // Pre-fill with user data
   const weight = ref('{{ user.weight }}'); // Pre-fill with user data
   const height = ref('{{ user.height }}'); // Pre-fill with user data
