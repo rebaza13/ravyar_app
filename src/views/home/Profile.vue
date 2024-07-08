@@ -57,6 +57,7 @@
           {{ editMode ? 'Cancel Edit' : 'Edit Profile' }}
         </ion-button>
         <form @submit.prevent="submitForm2">
+          <img class="w-20  h-20 rounded-full my-6 mx-auto " :src="isImage" alt="">
           <div class="form-group">
             <ion-label position="floating">Name</ion-label>
             <ion-input id="name" v-model="name" :disabled="!editMode"></ion-input>
@@ -65,10 +66,16 @@
             <ion-label position="floating">Description</ion-label>
             <ion-input id="description" v-model="description" :disabled="!editMode"></ion-input>
           </div>
+          <div class="form-group">
+            <ion-button @click="takePhoto" color="success" :disabled="!editMode">Take Photo</ion-button>
+            <ion-img v-if="photo" :src="photo"></ion-img>
+          </div>
           <ion-button type="submit" color="success" expand="block" class="mb-4" :disabled="!editMode">
             Submit
           </ion-button>
+          <div class="pb-10"></div>
         </form>
+        
       </div>
     </ion-content>
   </ion-page>
@@ -108,6 +115,7 @@ import { firebaseApp } from '@/firebase/firebase';
   const bodyType = ref('{{ user.type }}'); // Pre-fill with user data
   const editMode = ref(false);
   const imgUrl = ref('')
+  const isImage = ref('')
   // const router = useRouter();
   onMounted(async ()=>{
     const user = await getDocument('users',mainStore.user.uid)
@@ -118,6 +126,7 @@ import { firebaseApp } from '@/firebase/firebase';
     height.value = user.height
     bodyType.value = user.type
     description.value =  user.description
+    isImage.value = user?user.image:''
   })
   const toggleEditMode = () => {
     editMode.value = !editMode.value;
@@ -155,7 +164,8 @@ import { firebaseApp } from '@/firebase/firebase';
         await uploadPhoto()
         await updateDocument('users', userId, {
           name: name.value,
-          description: description.value
+          description: description.value,
+          image:imgUrl.value
         });
         alert('Profile updated successfully');
        
@@ -165,6 +175,19 @@ import { firebaseApp } from '@/firebase/firebase';
       alert(error.message);
       console.error('Error updating profile:', error);
     }
+    imgUrl.value =''
+    photo.value = null
+
+
+    const user = await getDocument('users',mainStore.user.uid)
+    name.value = user.name
+    age.value = user.age
+    gender.value = user.gender
+    weight.value = user.weight
+    height.value = user.height
+    bodyType.value = user.type
+    description.value =  user.description
+    isImage.value = user?user.image:''  
   };
 
   const storage = getStorage(firebaseApp)

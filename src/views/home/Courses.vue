@@ -54,8 +54,9 @@
           <div v-for="(item, index) in mixed" :key="index">
             <!-- User Info -->
             <div class="flex items-center bg-white p-4 rounded-lg shadow-md hover:shadow-lg">
-              <div class="min-w-12 min-h-12 bg-gray-100 rounded-full flex items-center justify-center">
+              <div class="min-w-12 min-h-12 overflow-hidden bg-gray-100 rounded-full flex items-center justify-center">
                 <!-- You can add user avatar or initials here -->
+                 <img class="w-12 h-12 object-cover" :src="item.users.image" alt="">
               </div>
               <div class="ml-4 w-full text-gray-700 flex justify-between items-center font-semibold">
              <p> Coach name:</p>
