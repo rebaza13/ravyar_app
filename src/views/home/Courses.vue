@@ -17,7 +17,7 @@
         <h2 class="text-xl font-bold text-gray-800 mb-4">Your Progress This Week</h2>
 
         <!-- Progress Bar -->
-        <div class="flex flex-col h-64 w-12 bg-gray-200 rounded-full overflow-hidden">
+        <div class="flex flex-col h-40 w-12 bg-gray-200 rounded-full overflow-hidden">
           <!-- Monday to Sunday progress -->
           <div class="flex-1 bg-gray-200"></div>
           <div class="flex-1 bg-gray-200"></div>
@@ -54,18 +54,20 @@
           <div v-for="(item, index) in mixed" :key="index">
             <!-- User Info -->
             <div class="flex items-center bg-white p-4 rounded-lg shadow-md hover:shadow-lg">
-              <div class="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center">
+              <div class="min-w-12 min-h-12 bg-gray-100 rounded-full flex items-center justify-center">
                 <!-- You can add user avatar or initials here -->
               </div>
-              <div class="ml-4 text-gray-700 font-semibold">
-                {{ item.users.name }}
+              <div class="ml-4 w-full text-gray-700 flex justify-between items-center font-semibold">
+             <p> Coach name:</p>
+             <p> {{ item.users.name }}</p>
               </div>
             </div>
 
             <!-- Courses Section -->
-            <section class="bg-gradient-to-t from-emerald-500 to-emerald-300 rounded-3xl shadow-lg mt-4">
-              <h2 class="text-xl font-bold text-white mb-6 text-center">Course - Day{{ index+1 }}</h2>
-              <div v-for="course in item.responses" :key="course.id" class="flex flex-col items-center space-y-4 rounded-lg p-6 bg-white shadow-md hover:shadow-xl">
+            <section class="bg-gradient-to-t  mt-4">
+
+              <div v-for="course,i in item.responses" :key="course.id" class="flex flex-col items-center space-y-4 bg-gradient-to-tr from-emerald-400 to-green-300  mt-10  rounded-lg p-6 bg-white shadow-md hover:shadow-xl">
+                <h2 class="text-xl  font-bold text-white mb-6 text-center">Course - Day {{ i+1 }}</h2>
                 <div class="flex items-center space-x-4 mb-4">
                   <svg class="text-slate-600 h-10 w-10" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                     <path fill="currentColor" d="M5.5 2H17a2.5 2.5 0 0 1 2.5 2.5v6.813a6.5 6.5 0 0 0-8.187 8.187H4.5a1 1 0 0 0 1 1h6.232A6.5 6.5 0 0 0 12.81 22H5.5A2.5 2.5 0 0 1 3 19.5v-15A2.5 2.5 0 0 1 5.5 2M7 5a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V6a1 1 0 0 0-1-1zm16 12.5a5.5 5.5 0 1 0-11 0a5.5 5.5 0 0 0 11 0m-6.086-2.403l2.806 1.84q.131.084.205.223q.075.136.075.298a.65.65 0 0 1-.072.298a.6.6 0 0 1-.198.226l-2.807 1.915a.6.6 0 0 1-.158.077a.55.55 0 0 1-.395-.023a.7.7 0 0 1-.193-.135a.7.7 0 0 1-.13-.2a.6.6 0 0 1-.047-.237v-3.758a.62.62 0 0 1 .367-.57a.55.55 0 0 1 .547.045" />
@@ -79,6 +81,7 @@
                 </div>
               </div>
             </section>
+            
           </div>
         </div>
       </div>

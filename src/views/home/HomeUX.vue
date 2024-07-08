@@ -14,25 +14,38 @@
 
         <div class="min-h-screen flex flex-col gap-5 items-center justify-start">
           <div class="w-[370px] h-[200px] shadow-lg z-[1] mx-2 rounded-lg" v-if="route.fullPath === '/home'">
-            <swiper :autoplay="true"space-between="30"  class="bg-red flex items-center justify-center">
+            <swiper :autoplay="{
+        
+               disableOnInteraction: false,
+            }"space-between="30"
+               :modules="modules"
+               :loop="true"
+               :speed="1000"
+            class="bg-red flex items-center justify-center">
+            
               <swiper-slide
-                class="relative"
-                v-for="advice in advices"
-                :key="advice.id"
-              >
-                <div
-                  class="bg-gradient-to-r from-green-400 to-blue-500 h-[200px] rounded-lg flex-grow p-6 text-white"
-                >
-                  <div class="flex items-center justify-between mb-4">
-                    <h3 class="text-xl font-bold">{{ advice.title }}</h3>
-                
-                  </div>
-                  <p class="text-sm">
-                 
-                  {{ advice.description }}
-                  </p>
-                </div>
-              </swiper-slide>
+  class="relative"
+  v-for="advice in advices"
+  :key="advice.id"
+>
+  <div class="relative z-[10]  overflow-hidden h-[200px] rounded-lg flex-grow p-6 text-white">
+    <img 
+      class="top-0 left-0   blur-sm rounded-lg absolute z-[1] object-cover w-full h-full" 
+      :src="advice.img" 
+      alt=""
+    >
+    <div class="relative rounded-lg z-[20]">
+ 
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="text-xl font-bold">{{ advice.title }}</h3>
+      </div>
+      <p class="text-sm">
+        {{ advice.description }}
+      </p>
+    </div>
+  </div>
+</swiper-slide>
+
             </swiper>
           </div>
          
@@ -151,13 +164,14 @@
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { useRouter, useRoute } from "vue-router";
 // Import Swiper styles
+import { Autoplay } from 'swiper/modules';
 import "swiper/css";
 import { getCollection } from "@/firebase/FirebaseMethods";
 import { onMounted, ref } from "vue";
 import { useMainStore } from "@/stores/MainStore";
 import { IonContent, IonPage } from "@ionic/vue";
 const advices = ref<any[]>([]); // Array to hold the list of advices
-
+ const modules = [Autoplay]
 // Fetch advices from Firebase on component mount
 onMounted(async () => {
   try {
