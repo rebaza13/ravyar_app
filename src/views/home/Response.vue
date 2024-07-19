@@ -41,7 +41,7 @@
                 </table>
 
                 <!-- Respond Button -->
-                <div class="bg-green-400 rounded-lg px-3 py-1 md:px-4 md:py-2 cursor-pointer hover:bg-green-500 text-xs md:text-sm">
+                <div @click="handleReleaod()" class="bg-green-400 rounded-lg px-3 py-1 md:px-4 md:py-2 cursor-pointer hover:bg-green-500 text-xs md:text-sm">
                   Respond
                 </div>
               </div>
@@ -94,6 +94,9 @@ const userRequests = ref<any>([]); // Array to hold the list of coaches
 const responseForms = ref<{ title: string; description: string; link: string }[][]>([]);
 const mainStore = useMainStore();
 const userId = ref('')
+const handleReleaod = ()=>{
+  window.location.reload()
+}
 // Fetch coaches from Firebase on component mount
 onMounted(async () => {
   const requestRef = collection(db, 'requests');
@@ -127,7 +130,7 @@ const submitResponse = async (index: number, userId: string,docId:string) => {
     await setDocumentWithRandomId('responses', { responses, coachId: mainStore.user.uid, id: userId });
     await updateDocument('requests',docId, {sent:true})
     alert('Response submitted successfully');
-    router.replace({name:'home'})
+    responseForms.value = []
   } catch (error) {
     console.error('Error submitting response:', error);
     alert('Error submitting response');

@@ -82,12 +82,15 @@
 
 const handleDelete = async (id:string)=>{
     let rId :any
-    const document = await getCollection('responses')
+    console.log('hellow')
+    const document = await getCollection('requests')
     document.forEach(async (obj:any)=>{
+      console.log(userId.value,"userID",id,"id from above",obj)
+
         if(obj.id ===userId.value){
            rId=  obj.documentId 
            await deleteDocument('requests',id)
-       await deleteDocument('responses',rId)
+ 
      alert('request removed')
 
         }

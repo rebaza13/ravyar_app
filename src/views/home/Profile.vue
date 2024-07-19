@@ -67,6 +67,10 @@
             <ion-input id="description" v-model="description" :disabled="!editMode"></ion-input>
           </div>
           <div class="form-group">
+            <ion-label position="floating">work price</ion-label>
+            <ion-input id="description" v-model="price" :disabled="!editMode"></ion-input>
+          </div>
+          <div class="form-group">
             <ion-button @click="takePhoto" color="success" :disabled="!editMode">Take Photo</ion-button>
             <ion-img v-if="photo" :src="photo"></ion-img>
           </div>
@@ -109,6 +113,7 @@ import { firebaseApp } from '@/firebase/firebase';
   const age = ref('{{ user.age }}'); // Pre-fill with user data
   // const email = ref('{{ user.email }}'); // Pre-fill with user data (disabled)
   const gender = ref(''); // Pre-fill with user data
+  const price = ref(0); // Pre-fill with user data
   const description = ref(''); // Pre-fill with user data
   const weight = ref('{{ user.weight }}'); // Pre-fill with user data
   const height = ref('{{ user.height }}'); // Pre-fill with user data
@@ -125,6 +130,7 @@ import { firebaseApp } from '@/firebase/firebase';
     weight.value = user.weight
     height.value = user.height
     bodyType.value = user.type
+    price.value = user.price?user.price:0
     description.value =  user.description
     isImage.value = user?user.image:''
   })
@@ -165,7 +171,8 @@ import { firebaseApp } from '@/firebase/firebase';
         await updateDocument('users', userId, {
           name: name.value,
           description: description.value,
-          image:imgUrl.value
+          image:imgUrl.value,
+          price:price.value
         });
         alert('Profile updated successfully');
        
