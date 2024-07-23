@@ -154,7 +154,8 @@ import { firebaseApp } from '@/firebase/firebase';
           image:imgUrl.value
         });
         alert('Profile updated successfully');
-    
+        photo.value = ''
+        editMode.value = !editMode.value;
         console.log('Profile updated successfully');
       }
     } catch (error) {
